@@ -31,6 +31,7 @@ char* toPostfix(char str[]) {
     char* postfix = (char *)malloc(strlen(str) * sizeof(char) + 1);
     int len = 0;
     push('#');
+    int lenBrackets = 0;;
     
     for (int i = 0; i < strlen(str); i++) {
         if (str[i] >= 'A' && str[i] <= 'z') {
@@ -41,10 +42,12 @@ char* toPostfix(char str[]) {
             }
             push(str[i]);
         } else if (str[i] == '(') {
+            lenBrackets++;
             push(str[i]);
         } else if (str[i] == ')') {
             while (Stack[top] != '(') {
                 postfix[len++] = pop();
+                lenBrackets--;
             }
             pop();
         } else {
@@ -55,7 +58,10 @@ char* toPostfix(char str[]) {
     while (Stack[top] != '#') {
         postfix[len++] = pop();
     }
-    
+    if (lenBrackets != 0) {
+        printf("Invalid expression\n");
+        exit(0);
+    }
     postfix[len] = '\0';
     return postfix;
 }
