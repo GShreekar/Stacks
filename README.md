@@ -1,1 +1,1 @@
-# Stacks Operations and Applications in C
+# Data Structures and Applications in C
