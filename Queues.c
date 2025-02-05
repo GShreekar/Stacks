@@ -4,35 +4,45 @@
 int queue[MAX];
 int front = -1, rear = -1;
 
-void insert(int data) {
-    if (rear == MAX - 1) {
-        printf("Queue Overflow.\n");
-    } else {
-        if (front == -1)
-            front = 0;
-        queue[++rear] = data;
-        printf("Element %d inserted into the queue.\n", data);
-    }
+int isFull() {
+    return rear == MAX - 1;
 }
 
-void delete() {
-    if (front == -1 || front > rear) {
-        printf("Queue Underflow.\n");
-    } else {
-        printf("Element %d deleted from the queue.\n", queue[front++]);
+int isEmpty() {
+    return front == -1 || front > rear;
+}
+
+void enqueue(int data) {
+    if (isFull()) {
+        printf("Queue Overflow.\n");
+        return;
     }
+    if (front == -1)
+        front = 0;
+    queue[++rear] = data;
+    printf("Element %d inserted into the queue.\n", data);
+}
+
+void dequeue() {
+    if (isEmpty()) {
+        printf("Queue Underflow.\n");
+        return;
+    }
+    printf("Element %d deleted from the queue.\n", queue[front++]);
+    if (front > rear)
+        front = rear = -1;
 }
 
 void display() {
-    if (front == -1 || front > rear) {
+    if (isEmpty()) {
         printf("Queue is empty! Nothing to display.\n");
-    } else {
-        printf("Queue elements: ");
-        for (int i = front; i <= rear; i++) {
-            printf("%d ", queue[i]);
-        }
-        printf("\n");
+        return;
     }
+    printf("Queue elements: ");
+    for (int i = front; i <= rear; i++) {
+        printf("%d ", queue[i]);
+    }
+    printf("\n");
 }
 
 int main() {
@@ -52,10 +62,10 @@ int main() {
             case 1:
                 printf("Enter the element to insert: ");
                 scanf("%d", &data);
-                insert(data);
+                enqueue(data);
                 break;
             case 2:
-                delete();
+                dequeue();
                 break;
             case 3:
                 display();

@@ -31,7 +31,7 @@ char* toPostfix(char str[]) {
     char* postfix = (char *)malloc(strlen(str) * sizeof(char) + 1);
     int len = 0;
     push('#');
-    int lenBrackets = 0;;
+    int lenBrackets = 0;
     
     for (int i = 0; i < strlen(str); i++) {
         if (str[i] >= 'A' && str[i] <= 'z') {
@@ -47,8 +47,8 @@ char* toPostfix(char str[]) {
         } else if (str[i] == ')') {
             while (Stack[top] != '(') {
                 postfix[len++] = pop();
-                lenBrackets--;
             }
+            lenBrackets--;
             pop();
         } else {
             printf("Invalid character\n");

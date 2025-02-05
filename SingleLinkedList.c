@@ -8,7 +8,6 @@ struct Node {
 
 struct Node* Start = NULL;
 
-// Function prototypes
 void insertNode(int info, int position);
 void displayList();
 void deleteNode(int position);
@@ -22,7 +21,7 @@ void reverseList();
 
 int main() {
     int choice, info, position;
-    struct Node* Start2 = NULL; // This will hold the second list
+    struct Node* Start2 = NULL;
 
     do {
         printf("\n1. Get List from User\n");
@@ -85,7 +84,6 @@ int main() {
         }
     } while (choice != 100);
 
-    // Free allocated memory for Start
     while (Start != NULL) {
         struct Node* temp = Start;
         Start = Start->next;
@@ -110,39 +108,39 @@ struct Node* getNode(int n) {
     struct Node *p = (struct Node *)malloc(sizeof(struct Node));
     if (p == NULL) {
         printf("No memory allocated\n");
-        return NULL;  // Return NULL if memory allocation fails
+        return NULL;
     } else {
-        p->info = n;  // Set the info of the new node
-        p->next = NULL;  // Initialize the next pointer
-        return p;  // Return the new node
+        p->info = n;
+        p->next = NULL;
+        return p;
     }
 }
 
 void insertNode(int info, int position) {
-    struct Node* newNode = getNode(info);  // Create a new node using getNode
+    struct Node* newNode = getNode(info);
     if (!newNode) {
-        return;  // Exit if memory allocation fails
+        return;
     }
 
     if (position == 0) {
         newNode->next = Start;
-        Start = newNode;  // Insert at the beginning
+        Start = newNode;
         return;
     }
 
     struct Node* current = Start;
     for (int i = 0; current != NULL && i < position - 1; i++) {
-        current = current->next;  // Traverse to the specified position
+        current = current->next;
     }
 
     if (current == NULL) {
-        free(newNode);  // Free the newly created node if position is out of bounds
+        free(newNode);
         printf("Position out of bounds.\n");
         return;
     }
 
-    newNode->next = current->next;  // Link the new node to the next
-    current->next = newNode;  // Link the current node to the new node
+    newNode->next = current->next;
+    current->next = newNode;
 }
 
 void displayList() {
@@ -197,14 +195,14 @@ void sortList() {
 }
 
 void insert_into_sorted(int info) {
-    struct Node* newNode = getNode(info);  // Create a new node using getNode
+    struct Node* newNode = getNode(info);
     if (!newNode) {
-        return;  // Exit if memory allocation fails
+        return;
     }
 
     if (Start == NULL || Start->info >= newNode->info) {
         newNode->next = Start;
-        Start = newNode;  // Insert at the beginning
+        Start = newNode;
         return;
     }
     struct Node* current = Start;
@@ -216,23 +214,20 @@ void insert_into_sorted(int info) {
 }
 
 void mergeLists() {
-    struct Node* newList = NULL;  // This will hold the new list
-    // Get the new list from the user
+    struct Node* newList = NULL;
     printf("Getting new list from user...\n");
-    getList(); // Call getList to populate newList
+    getList();
 
-    // Append newList to the end of Start
     if (Start == NULL) {
-        Start = newList;  // If the current list is empty, set Start to newList
+        Start = newList;
     } else {
         struct Node* current = Start;
         while (current->next != NULL) {
-            current = current->next;  // Traverse to the end of the current list
+            current = current->next;
         }
-        current->next = newList;  // Link the end of the current list to newList
+        current->next = newList;
     }
 
-    // Sort the combined list
     sortList();
     printf("Combined and sorted list: ");
     displayList();
@@ -247,5 +242,5 @@ void reverseList() {
         previous = current;
         current = nextNode;
     }
-    Start = previous;  // Update Start to point to the new head of the reversed list
+    Start = previous;
 }
